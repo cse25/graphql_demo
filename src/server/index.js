@@ -2,6 +2,7 @@
 
 import compression from 'compression'
 import express from 'express'
+import expressGraphQL from 'express-graphql'
 
 import { APP_NAME, STATIC_PATH, WEB_PORT } from '../shared/config'
 import { isProd } from '../shared/util'
@@ -12,6 +13,10 @@ const app = express()
 app.use(compression())
 app.use(STATIC_PATH, express.static('dist'))
 app.use(STATIC_PATH, express.static('public'))
+
+app.use('/graphql', expressGraphQL({
+  graphiql: true
+}))
 
 app.get('/', (req, res) => {
   res.send(renderApp(APP_NAME))
