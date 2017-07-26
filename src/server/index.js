@@ -7,6 +7,7 @@ import expressGraphQL from 'express-graphql'
 import { APP_NAME, STATIC_PATH, WEB_PORT } from '../shared/config'
 import { isProd } from '../shared/util'
 import renderApp from './render-app'
+import schema from './schema/schema'
 
 const app = express()
 
@@ -15,7 +16,8 @@ app.use(STATIC_PATH, express.static('dist'))
 app.use(STATIC_PATH, express.static('public'))
 
 app.use('/graphql', expressGraphQL({
-  graphiql: true
+  schema,
+  graphiql: true,
 }))
 
 app.get('/', (req, res) => {
